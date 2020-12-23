@@ -1,12 +1,12 @@
 <template>
   <div class="main-class">
     <div class="article-info" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
-      <el-card class="box-card" v-for="article in articles" :key="article.articleId">
+      <el-card v-for="article in articles" :key="article.articleId">
         <div class="item">
           <el-link :underline="false" style="font-size: 20px" @click="viewArticleDetail(article.articleId, article.articleSlug)">{{
             article.articleTitle
           }}</el-link>
-          <more-actions :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float:right;"/>
+          <more-actions :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
         </div>
         <div class="item">
           <other-blog-info :articleCreateTime="article.articleCreateTime.time" :categoryName="article.categoryName" :tags="articleIdTagsMap[article.articleId]">
@@ -37,15 +37,7 @@
       </div>
     </div>
     <div class="right-info">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>卡片名称</span>
-          <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-        </div>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{ '列表内容 ' + o }}
-        </div>
-      </el-card>
+      <notification />
     </div>
   </div>
 </template>
@@ -56,20 +48,20 @@ import { getArticlesInfo } from '@/api/article'
 // import myCard from '@/components/myCard'
 import moreAction from '@/components/moreAction'
 import otherBlogInfo from '@/components/otherBlogInfo'
+import notification from '@/components/notification';
 
 export default {
   components: {
-    // 'my-tag':tags,
-    // 'my-card':myCard,
     'more-actions': moreAction,
     'other-blog-info': otherBlogInfo,
+    notification,
   },
   data() {
     return {
       articles: {},
       articleIdTagsMap: {},
-      loading: true,
-      pageSize: 6,
+      loading: false,
+      pageSize: 8,
       currentPage: 1,
       // 总条数，根据接口获取数据长度(注意：这里不能为空)
       totalCount: 1,
@@ -119,7 +111,7 @@ export default {
   display: inline-flex;
   flex: 1 1 auto;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
   min-width: 300px;
   height: 100%;
   padding: 0 10px;
@@ -128,7 +120,7 @@ export default {
   display: inline-flex;
   flex: 1 1 auto;
   flex-direction: column;
-  width: auto;
+  width: 30%;
   min-width: 200px;
   height: 100%;
   padding: 0 10px;
@@ -151,15 +143,6 @@ export default {
   margin-bottom: 18px;
 }
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: '';
-}
-.clearfix:after {
-  clear: both;
-}
-
 .articleActivitiesClass {
   padding-right: 0 !important;
   font-size: 15px;
@@ -167,7 +150,7 @@ export default {
   line-height: 20px;
   margin-right: 15px;
   margin-top: 15px;
-  color: #565a5f;
+  color: #999;
 }
 
 .el-tag {

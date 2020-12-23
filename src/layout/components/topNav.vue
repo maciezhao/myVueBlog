@@ -23,18 +23,15 @@
           </el-dropdown-menu>
         </el-dropdown>
       </template>
-      <template v-else>
-        <el-button type="primary"></el-button>
-        <template>
+      <div v-else>
           <!-- <router-link to="/login"> -->
             <el-button size="small" @click.native.prevent="openDialog" type="primary">登录</el-button>
               <login/>
           <!-- </router-link> -->
-          <router-link to="/register">
+          <!-- <router-link to="/register"> -->
             <el-button size="small" type="danger">注册</el-button>
-          </router-link>
-        </template>
-      </template>
+          <!-- </router-link> -->
+      </div>
     </div>
   </div>
 </template>
@@ -98,7 +95,6 @@ export default {
     editArticle() {
       if(!this.$store.state.user.token) {
         this.$store.dispatch('app/toggleLoginDialog').then(() => {
-
         })
       }
       else {

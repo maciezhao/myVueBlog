@@ -101,6 +101,7 @@ export default {
           // ref: '',//保存mavonEditor实例  实际不该这样
           default_open: 'edit',
           placeholder: '请输入正文',
+
           toolbars: {
             bold: true, // 粗体
             italic: true, // 斜体
@@ -141,7 +142,7 @@ export default {
       rules: {
         articleTitle: [
           { required: true, message: '标题不能为空', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度为3-20个字符', trigger: 'blur' }
+          { min: 3, max: 30, message: '长度为3-30个字符', trigger: 'blur' }
         ],
         articleSlug: [
           { required: true, message: '英文标题不能为空', trigger: 'blur' },
@@ -206,7 +207,7 @@ export default {
     handleInputConfirm() {
       setTimeout(() => {
         let inputNewTag = this.inputNewTag;
-        if (inputNewTag && this.articleForm.dynamicTags.indexOf(inputNewTag.trim()) == -1) {
+        if (inputNewTag && this.articleForm.dynamicTags.indexOf(inputNewTag.trim()) === -1) {
           this.articleForm.dynamicTags.push(inputNewTag);
         }
         this.inputVisible = false;
@@ -315,7 +316,7 @@ export default {
 
 <style scoped>
 .input-title /deep/ .el-input__inner {
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: 700;
   border-radius: 0;
   border-top-width: 0px;

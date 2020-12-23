@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <layout/>
+    <el-backtop target="#app"></el-backtop>
   </div>
 </template>
 
@@ -15,4 +16,11 @@ export default {
 </script>
 
 <style  lang="scss">
+#app {
+  height: 100vh;
+  overflow-x: hidden;
+}
+.el-backtop {
+  z-index: 9999;
+}
 </style>

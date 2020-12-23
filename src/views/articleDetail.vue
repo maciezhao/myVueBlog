@@ -1,25 +1,27 @@
 <template>
   <div>
-    <el-card style="background:rgb(251, 251, 251)" v-loading="listLoading" v-if="article">
-      <div class="item">
-        <el-link style="font-weight: 600; font-size: 20px">{{ article.articleTitle }}</el-link>
-        <more-action :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float:right"/>
-      </div>
-      <div class="item">
-        <other-blog-info :articleCreateTime="article.articleCreateTime.time" :categoryName="article.categoryName" :tags="tags"> </other-blog-info>
-      </div>
-      <!-- <div class="text item">
+    <div style="min-height: 500px">
+      <el-card v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" v-if="article">
+        <div class="item">
+          <span style="font-weight: 700; font-size: 24px">{{ article.articleTitle }}</span>
+          <more-action :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
+        </div>
+        <div class="item">
+          <other-blog-info :articleCreateTime="article.articleCreateTime.time" :categoryName="article.categoryName" :tags="tags"> </other-blog-info>
+        </div>
+        <!-- <div class="text item">
           {{ article.articleSummary }}
         </div> -->
-      <div class="text-body">
-        <markdown-editor :editor="article.editor"></markdown-editor>
-      </div>
-      <el-divider></el-divider>
-      <div>
-        <span class="articleActivitiesClass"> <i class="iconfont icon-eye"></i>{{ '&nbsp;' + article.articleViewCount }} </span>
-        <span class="articleActivitiesClass"><i class="iconfont icon-commenting"></i>{{ '&nbsp;' + article.articleCommentsCount }} </span>
-      </div>
-    </el-card>
+        <div class="text-body">
+          <markdown-editor :editor="article.editor"></markdown-editor>
+        </div>
+        <el-divider></el-divider>
+        <div>
+          <span class="articleActivitiesClass"> <i class="iconfont icon-eye"></i>{{ '&nbsp;' + article.articleViewCount }} </span>
+          <span class="articleActivitiesClass"><i class="iconfont icon-commenting"></i>{{ '&nbsp;' + article.articleCommentsCount }} </span>
+        </div>
+      </el-card>
+    </div>
     <div class="post-nav">
       <div class="post-nav-item">
         <template v-if="prevArticle !== null && prevArticle.articleId !== 0">
@@ -48,7 +50,8 @@ export default {
       article: null,
       tags: null,
       prevArticle: null,
-      nextArticle: null
+      nextArticle: null,
+      loading: false,
     }
   },
   inject: ['reload'],
@@ -58,7 +61,7 @@ export default {
   methods: {
     getArticleDetail() {
       let that = this
-      that.listLoading = true
+      that.loading = true
       let id = that.$route.params.articleId
       getArticleDetailById(id).then(response => {
         //  let art = {"articles":[{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":25,"day":5,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1600963200000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":1,"articleSlug":"first-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第一篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":2,"articleSlug":"second-blog","articleSummary":"博客demo","articleTag":"博客","articleTitle":"第二篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":3,"articleSlug":"third-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第三篇博客","articleViewCount":0,"categoryId":0}],"code":20000}
@@ -68,13 +71,14 @@ export default {
           value: response.article.articleContentMd,
           toolbarsFlag: false,
           subfield: false,
-          defaultOpen: 'preview'
+          previewBackground: '#fff',
+          defaultOpen: 'preview',
         }
         this.article['editor'] = editor
         that.prevArticle = response.prevArticle
         that.nextArticle = response.nextArticle
         that.tags = response.tags
-        that.listLoading = false
+        that.loading = false
       })
     },
     viewArticleDetail(article) {
@@ -94,25 +98,19 @@ export default {
 <style scoped lang="scss">
 .text-body {
   font-size: 14px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  min-height: 300px;
-}
-.text {
-  font-size: 14px;
+  margin: 0 20px;
+  // min-height: 300px;
 }
 
 .item {
   margin-bottom: 18px;
+  text-align: center;
 }
 
-// .el-card {
-//   // width: 700px;
-//   min-width: 200px;
-//   border-radius: 8px;
-//   margin-top: 15px;
-// }
-
+.el-card.is-always-shadow {
+  box-shadow: none;
+  border: none;
+}
 
 .articleActivitiesClass {
   padding-right: 0 !important;
@@ -127,8 +125,11 @@ export default {
 .post-nav {
   display: flex;
   justify-content: space-between;
-  margin: 0 1rem;
+  // margin: 0 1rem;
+  background-color: rgba(0, 136, 204, 0.1);
+  box-shadow: 20px 0 rgba(0, 136, 204, 0.1), -20px 0 rgba(0, 136, 204, 0.1);
 }
+
 .post-nav-item {
   display: inline-flex;
   align-items: center;

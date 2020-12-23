@@ -9,7 +9,7 @@
     <el-button style="float: right; padding: 3px 0; font-size:20px" type="text" slot="reference">...</el-button>
   </el-popover> -->
   <el-dropdown trigger="click" v-if="authCheck">
-    <el-button type="text" class="el-dropdown-link" style="font-size: 20px; padding: 0">...</el-button>
+    <el-button type="text" class="el-dropdown-link" style="font-size: 20px; padding: 0; margin-right: 15px">...</el-button>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item><el-button type="text" @click="editArticle(articleId)">编 辑</el-button></el-dropdown-item>
       <el-dropdown-item><el-button type="text" @click="deleteArticle(articleId)">删 除</el-button></el-dropdown-item>

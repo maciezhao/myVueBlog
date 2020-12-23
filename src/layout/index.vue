@@ -5,7 +5,7 @@
     </el-aside>
     <el-container class="main-container">
       <el-header style="height: auto">
-        <i class="sidebar-btn icon-btn iconfont icon-bars" @click="toggleSideBar"/>
+        <i class="sidebar-btn icon-btn iconfont icon-bars" @click="toggleSideBar" />
         <top-nav />
       </el-header>
       <el-main>
@@ -14,6 +14,9 @@
           <router-view :key="key" />
         </div>
       </el-main>
+      <el-footer>
+        <my-footer></my-footer>
+      </el-footer>
     </el-container>
   </el-container>
 </template>
@@ -21,6 +24,7 @@
 <script>
 import topNav from './components/topNav'
 import sideBar from './components/sideBar/index'
+import myFooter from './components/myFooter'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -28,6 +32,7 @@ export default {
   components: {
     'top-nav': topNav,
     'side-bar': sideBar,
+    'my-footer': myFooter,
   },
   mixins: [ResizeMixin],
   provide() {
@@ -82,22 +87,22 @@ export default {
 @import '~@/styles/variables.scss';
 
 .sidebar-btn {
-    position: fixed;
-    left: 0;
-    top: 0;
-    color: #00A1D6;
-    margin: 10px;
-    z-index: 100;
+  position: fixed;
+  left: 0;
+  top: 0;
+  color: $--color-primary;
+  margin: 10px;
+  z-index: 100;
 }
 .icon-btn {
-    width: 40px;
-    line-height: 40px;
-    font-size: 27px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+  width: 40px;
+  line-height: 40px;
+  font-size: 27px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
 
-    transition: 0.3s;
+  transition: 0.3s;
 }
 .icon-btn:hover {
   text-shadow: 0 0 20px;
@@ -118,6 +123,16 @@ export default {
 //     top: 0;
 //   }
 // }
+.el-footer {
+  background-color: $bodyBg;
+  text-align: center;
+  padding: 20px 20px 0;
+  font-size: 15px;
+  line-height: 2;
+}
+.el-main {
+  padding: 20px 20px 0px;
+}
 .drawer-bg {
   background: #000;
   opacity: 0.3;

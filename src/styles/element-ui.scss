@@ -4,11 +4,9 @@
   color:$regularTextColor;
   border-radius: 8px;
   margin-top: 10px;
-}
-
-.el-breadcrumb__inner,
-.el-breadcrumb__inner a {
-  font-weight: 400 !important;
+  .card-item {
+    margin-bottom: 18px;
+  }
 }
 
 .el-upload {

@@ -4,11 +4,11 @@
       <a href="#/about" title="Macie">
         <img class="logo" src="@/assets/me.jpeg" alt="Macie" />
       </a>
-      <div class="site-author-name">
-        <el-link href="#/about" title="Macie" :underline="false">{{ cardInfo.userName }}</el-link>
+      <div class="site-author-name card-item">
+        <el-link href="#/about" title="Macie" :underline="false" style="font-size: 20px; font-weight: 200">{{ cardInfo.userName }}</el-link>
       </div>
-      <div class="site-desc">{{ cardInfo.desc }}</div>
-      <div>
+      <div class="site-desc card-item">{{ cardInfo.desc }}</div>
+      <div class="site-location card-item">
         <i class="iconfont icon-location" />
         <span>{{ cardInfo.location }}</span>
       </div>
@@ -16,15 +16,15 @@
     <el-divider />
     <div class="site-article-info">
       <div class="site-article-info-item">
-        {{ articlesTotalCount }}<br />
+        {{ AllCount.articlesTotalCount }}<br />
         <span>文章</span>
       </div>
       <div class="site-article-info-item">
-        {{ tagsTotalCount }}<br />
+        {{ AllCount.tagsTotalCount }}<br />
         <span>标签</span>
       </div>
       <div class="site-article-info-item">
-        {{ categoryTotalCount }}<br />
+        {{ AllCount.categoriesTotalCount }}<br />
         <span>分类</span>
       </div>
     </div>
@@ -40,20 +40,20 @@
 </template>
 
 <script>
-import { getUserInfoByUserName } from '@/api/article'
+import { getAllCount } from '@/api/article'
 
 export default {
   name: 'myCard',
-  props: {
-    articlesTotalCount: Number,
-    tagsTotalCount: Number,
-    categoryTotalCount: Number,
-  },
   data() {
     return {
+      AllCount: {
+        articlesTotalCount: Number,
+        tagsTotalCount: Number,
+        categoriesTotalCount: Number,
+      },
       cardInfo: {
         userName: 'Macie',
-        desc: '努力是世界上最棒的才能',
+        desc: '初级java开发攻城狮😜',
         location: '深圳',
       },
       github: {
@@ -62,15 +62,15 @@ export default {
       },
       csdn: {
         title: 'CSDN',
-        link: 'https://www.zhihu.com/people/imoyao'
+        // link: 'https://www.zhihu.com/people/imoyao'
       },
       douban: {
         title: 'Douban',
-        link: 'https://www.douban.com/people/rainie19'
+        // link: 'https://www.douban.com/people/rainie19'
       },
       juejin: {
         title: 'Juejin',
-        link: 'https://juejin.cn/user/3254175517649629'
+        // link: 'https://juejin.cn/user/3254175517649629'
       },
       email: {
         title: 'Email',
@@ -79,13 +79,13 @@ export default {
     }
   },
   created() {
-    //this.getUserInfo()
+    this.getBlogOverview()
   },
   methods: {
-    getUserInfo() {
+    getBlogOverview() {
       let that = this
-      getUserInfoByUserName().then(response => {
-        that.userInfo = response.userInfo
+      getAllCount().then(response => {
+        that.AllCount = response.AllCount
       })
     },
 
@@ -108,7 +108,10 @@ export default {
   box-shadow: 0 0 30px #caeefb;
 }
 .site-author-name {
-  color: #0088cc;
+  color: #00A1D6;
+}
+.site-desc {
+  color: #999;
 }
 .el-divider {
   background: #dcdfe6;
@@ -124,6 +127,10 @@ export default {
   width: 33%;
   text-align: center;
   padding: 5px;
+  font-size: 20px;
+}
+.site-article-info-item span {
+  font-size: 16px;
 }
 .el-tag {
   margin: 5px;

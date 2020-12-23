@@ -54,6 +54,7 @@ const actions = {
         if (!response) {
           reject('验证失败，请重新登录！')
         }
+        if(response.userInfo)
         commit('SET_AVATAR', response.userInfo.userAvatarPath)
         resolve(response)
       }).catch(error => {

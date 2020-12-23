@@ -1,5 +1,14 @@
 <template>
-  <mavon-editor class="md-editor-class" :style="{ 'z-index': zindex }" ref="md" v-model="editor.value" @imgAdd="imgAdd" v-bind="editor"> </mavon-editor>
+  <mavon-editor
+    class="md-editor-class"
+    :style="{ 'z-index': zindex }"
+    ref="md"
+    v-model="editor.value"
+    @imgAdd="imgAdd"
+    @imgDel="imgDel"
+    v-bind="editor"
+  >
+  </mavon-editor>
 </template>
 
 
@@ -36,16 +45,22 @@ export default {
   methods: {
     imgAdd(pos, $file) {
       let that = this
-      let formdata = new FormData();
-      formdata.append('image', $file);
-      uploadImg(formdata).then(response => {
+      let formData = new formData();
+      formData.append('image', $file);
+      uploadImg(formData).then(response => {
         // 将返回的url替换到文本原位置![...](./0) -> ![...](url)
         console.log(pos)
         that.$refs.md.$img2Url(pos, response.imageUrl);
       }).catch(error => {
         that.$message.error({ message: error, showClose: true });
       })
-    }
+    },
+    imgDel(pos) {
+      console.log("imgDel:",pos[0])
+      // deleteImg(pos[0])
+
+
+    },
   },
   components: {
     mavonEditor

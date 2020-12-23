@@ -1,26 +1,24 @@
 <template>
-<div>
-    <el-row :gutter="20">
-    
-    <template v-for="category in categories">
-      <el-col :span="6" :key="category.categoryId">
-    <router-link :to="{name:'CategoryOrTag',params:{type:'category', id:category.categoryName}}" >
-        <el-card class="box-card">
-          <h1>{{category.categoryName}}</h1>
-      </el-card>
-    </router-link>
-    </el-col>
-    </template>
-  </el-row>
-</div>
+  <div class="category-class" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
+    <h1 style="text-align: center"><i class="icon-class iconfont icon-folder" /> 分类</h1>
+    <div v-for="category in categories" :key="category.categoryId">
+      <router-link :to="{ name: 'CategoryOrTag', params: { type: 'category', id: category.categoryName } }">
+        <i class="iconfont icon-folder-open" /><el-link :underline="false" style="font-size: 16px" class="category-link">{{
+          category.categoryName + ' [' + articlesCount[category.categoryName] + '] '
+        }}</el-link>
+      </router-link>
+    </div>
+  </div>
 </template>
 
 <script>
-import {getAllCategories} from '@/api/article'
+import { getAllCategories } from '@/api/article'
 export default {
   data() {
     return {
-      categories:null,
+      categories: null,
+      articlesCount: {},
+      loading: false,
     }
   },
   created() {
@@ -29,8 +27,11 @@ export default {
   methods: {
     getCategories() {
       let that = this
+      that.loading = true
       getAllCategories().then(response => {
         that.categories = response.categories
+        that.articlesCount = response.articlesCount
+        that.loading = false
       })
     }
   },
@@ -38,45 +39,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-main {
-  color: #333;
-  text-align: justify;
-  /* line-height: 60px; */
-  // max-width: 730px;
-  /* margin:0 auto; 垂直居中，必须与width搭配使用 */
+.category-class {
+  min-height: 300px;
+  padding: 0 50px;
 }
-  .el-row {
-    
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    min-width: 200px;
-    margin:20px;
-    border-radius: 4px;
-  }
-.text {
-  font-size: 14px;
+.category-link {
+  padding: 10px;
 }
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-.box-card {
-   width: 100%;
-   min-height: 200px;
-  border-radius: 8px;
-  margin-top: 15px;
+.icon-class {
+  font-size: 30px;
 }
 </style>

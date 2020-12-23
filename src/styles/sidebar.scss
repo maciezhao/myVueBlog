@@ -12,7 +12,7 @@
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $siderBarBg;
+    background-color: $sideBarBg;
     height: 100%;
     position: fixed;
     // font-size: 0px;
@@ -39,10 +39,15 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+
     }
 
     .el-scrollbar__bar.is-vertical {
       right: 0px;
+
+    }
+          .el-scrollbar__thumb {
+        background-color:rgba(0, 161, 214, 0.1);
     }
 
     .el-scrollbar {

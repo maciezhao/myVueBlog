@@ -62,6 +62,13 @@ export function deleteArticle(id) {
     data:qs.stringify({articleId:id}),
   })
 }
+export function getAllCount() {
+  return request({
+    url: '/getAllCount',
+    method: 'get',
+  })
+}
+
 
 export function uploadImg(formData) {
   return request({

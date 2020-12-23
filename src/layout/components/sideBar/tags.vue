@@ -1,10 +1,10 @@
 <template>
   <el-card>
     <div class="card-item">
-      <span>标签云</span>
+      <span style="font-weight:800">标签云</span>
     </div>
     <div class="each-tag" v-for="t in tags" :key="t.tagName">
-      <a @click="showTagDetail(t.tagName)" :style="{ color: t.color, 'font-size': t.fontSize }">{{ t.tagName }}</a>
+      <a @click="showTagDetail(t.tagName)" :style="{ color: t.color, 'font-size': t.fontSize }">{{t.tagName }}</a>
     </div>
   </el-card>
 </template>

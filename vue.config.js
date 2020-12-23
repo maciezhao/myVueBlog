@@ -53,7 +53,7 @@ module.exports = {
     disableHostCheck: true,
     https: false, //false关闭https，true为开启
     open: false, //自动打开浏览器
-    proxy: 'http://localhost:8088'//处理跨域问题，tomcat服务器端口为8088
+    proxy: 'http://localhost:8088'//处理跨域问题，tomcat服务器端口为8088, http://8.129.97.122:8080/
     // disableHostCheck: true
   },
 

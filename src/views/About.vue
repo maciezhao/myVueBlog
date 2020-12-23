@@ -1,95 +1,32 @@
 <template>
-<div>
-<el-row :gutter="20">
-  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
-</el-row>
-<el-row>
-  <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="12"><div class="grid-content bg-purple-light"></div></el-col>
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="8"><div class="grid-content bg-purple-light"></div></el-col>
-  <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-</el-row>
-<el-row>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-</el-row>
-<el-row type='flex' justify="center">
-  <el-button type="primary">fabu</el-button>
-</el-row>
-
-<el-form :rules="rules" :model="aform">
-  <el-form-item label="" prop="input">
-    <el-input v-model="aform.input" placeholder=""></el-input>
-  </el-form-item>
-</el-form>
-<div > yoyoyo
-  <vue-word-cloud
-    class="my-tag"
-    :words="words"
-    :animation-overlap="3"
-    :font-size-ratio="3"
-    rotation-unit="deg"
-    :rotation="0"
-    :spacing="0.618"
-    :color="([, weight]) => weight > 20 ? 'rgb(255, 78, 105)': weight > 15 ? 'rgb(49, 165, 13)' : weight > 10 ? 'rgb(255, 208, 119)' : weight > 5 ? 'rgb(58, 158, 234)' : weight === 0 ? '#909399' :'rgb(59, 196, 199)'"
-    font-family="Roboto"
-  >
-  <template slot-scope="{text, weight, word}">
-    <div :title="weight" style="cursor: pointer;" @click="onWordClick(word)">
-      {{ text }}
-    </div>
-  </template>
-</vue-word-cloud>
-</div>
-<div class="space">
-<a>fjkd</a>
-<a>fjkd</a>
-<a>fjkd</a>
-<a>fjkd</a>
-</div>
-<!-- <el-button>fjkd</el-button>
-<el-button>fjkd</el-button>
-<el-button>fjkd</el-button> -->
-<el-divider/>
-<div class="main-class">
-<div class="middle-class"><el-card class="article-class"/><el-card class="article-class"/><el-card class="article-class"/></div>
-<div class="right-class"><el-card class="article-class"/><el-card class="article-class"/><el-card class="article-class"/></div>
-
-<!-- <div class="middle-class" style="background:yellow">yellow</div> -->
-<!-- <div class="right-class" style="background:red">{{red}}</div> -->
-<!-- <div class="right-class"><p style="display:block">封装一个流水号ID生成器：id-spring-boot-starter,封装一个流水号ID生成器：id-spring</p></div> -->
-
-</div>
-</div>
+<markdown-editor :editor="about.editor"></markdown-editor>
 
 </template>
 
 <script>
-import VueWordCloud from 'vuewordcloud'; 
+import MarkdownEditor from '@/components/MarkdownEditor'
+
 export default {
     components: {
-    'vue-word-cloud': VueWordCloud,
+    MarkdownEditor,
     },
   data() {
     return {
-      words:[['romance', 19], ['horror', 3], ['fantasy', 7], ['adventure', 3]],
-      input:'',
-      red:!!1,
-      aform: {
-        input: '',
-      },
-      rules: {
-        input: [
-          {required: true, message: '标题不能为空', trigger: 'blur'},
-        ],
-      },
+      about: {
+        editor: {
+          value: `### 关于我
++ 成电19届本科生，毕业差不多一年半，还能算是一枚刚进入社会的萌新吧:grin:
++ 刚踏入java领域不久，之前做嵌入式开发相关的工作，这个网站就是我新征程的起点，养成写博客的好习惯，总有一天我也能名震江湖:rofl:
++ 我会把我的成长记录于此，也希望我java开发之旅一切顺利！最后，来一句鸡汤：**努力是世界上最棒的才能呀**&nbsp;&nbsp;&nbsp;&nbsp;--元气囡仔
+### 联系方式
++ 邮箱：<macie.zhao@outlook.com>
++ GitHub: <https://github.com/rainie19>`,
+          toolbarsFlag: false,
+          subfield: false,
+          previewBackground: '#fff',
+          defaultOpen: 'preview',
+        }
+      }
     };
   },
 }

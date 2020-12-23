@@ -3,9 +3,6 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-//import 'element-ui/lib/theme-chalk/index.css'
-//import '@/theme/green/theme/index.css'
-import '@/styles/element-variables.scss'
 import '@/styles/index.scss' // global css
 import '@/assets/icons/iconfont.css' // icon
 import App from './App'

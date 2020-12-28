@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="loginDialogVisible" :before-close="handleDialogClose" width="40%" style="min-width: 500px" :close-on-click-modal="false">
+  <el-dialog :visible.sync="loginDialogVisible" :before-close="handleDialogClose" width="40%" :close-on-click-modal="false">
     <div class="login-container">
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
         <div class="title-container">
@@ -139,6 +139,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+
 .login-container {
   min-height: 100%;
   width: 100%;

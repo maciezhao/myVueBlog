@@ -312,10 +312,8 @@ export default {
   margin: 0 10px;
   vertical-align: middle;
 }
-</style>
 
-<style scoped>
-.input-title /deep/ .el-input__inner {
+.input-title ::v-deep .el-input__inner {
   font-size: 20px;
   font-weight: 700;
   border-radius: 0;

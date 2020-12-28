@@ -5,7 +5,9 @@
     </el-aside>
     <el-container class="main-container">
       <el-header style="height: auto">
+        <div v-if="device === 'mobile'">
         <i class="sidebar-btn icon-btn iconfont icon-bars" @click="toggleSideBar" />
+        </div>
         <top-nav />
       </el-header>
       <el-main>
@@ -92,7 +94,7 @@ export default {
   top: 0;
   color: $--color-primary;
   margin: 10px;
-  z-index: 100;
+  z-index: 1002;
 }
 .icon-btn {
   width: 40px;

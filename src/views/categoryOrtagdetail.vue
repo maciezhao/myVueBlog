@@ -1,27 +1,27 @@
 <template>
   <div v-loading="listLoading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
     <template v-if="this.$route.params.type === 'category'">
-    <h1 class="post-header"><i class="icon-class iconfont icon-folder-open"/>  {{ this.$route.params.id }}</h1>
+      <h1 class="post-header"><i class="icon-class iconfont icon-folder-open" /> {{ this.$route.params.id }}</h1>
     </template>
     <template v-else-if="this.$route.params.type === 'tag'">
-          <h1 class="post-header"><i class="icon-class iconfont icon-tag"/>  {{ this.$route.params.id }}</h1>
-
+      <h1 class="post-header"><i class="icon-class iconfont icon-tag" /> {{ this.$route.params.id }}</h1>
     </template>
     <el-timeline>
       <el-timeline-item color="#00a1d6" v-for="article in articles" :key="article.articleId">
-        <el-card :body-style="{ padding: 0 }" style="margin: 0; bord-radius:none">
+        <el-card :body-style="{ padding: 0 }" style="margin: 0; bord-radius: none">
           <el-link :underline="false" style="font-size: 20px; padding: 10px" @click="viewArticleDetail(article.articleId, article.articleSlug)">{{
             article.articleTitle
           }}</el-link>
           <more-actions :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
-          <br />
-          <other-blog-info
-            style="padding: 10px"
-            :articleCreateTime="article.articleCreateTime.time"
-            :categoryName="article.categoryName"
-            :tags="articleIdTagsMap[article.articleId]"
-          >
-          </other-blog-info>
+          <div>
+            <other-blog-info
+              style="padding: 10px"
+              :articleCreateTime="article.articleCreateTime.time"
+              :categoryName="article.categoryName"
+              :tags="articleIdTagsMap[article.articleId]"
+            >
+            </other-blog-info>
+          </div>
         </el-card>
       </el-timeline-item>
     </el-timeline>

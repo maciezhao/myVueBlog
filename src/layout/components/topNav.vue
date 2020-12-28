@@ -1,22 +1,21 @@
 <template>
   <div class="top-nav">
     <span class="blog-title">{{ blogTitle }}</span>
-
     <el-menu router :default-active="$route.path" mode="horizontal" :active-text-color="menuActiveText" @select="handleSelect">
       <!-- 顶部导航 -->
       <el-menu-item v-for="(item, i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
     </el-menu>
-
     <div class="nav-right">
-        <el-button type="primary" size="medium" style="margin:0 10px" @click="editArticle"><i class="el-icon-edit"></i>写文章</el-button>
+      <el-button type="primary" size="medium" style="margin: 0 10px" @click="editArticle"><i class="el-icon-edit"></i>写文章</el-button>
       <template v-if="userInfo.login">
-        <el-dropdown trigger="click" style="padding:0 10px">
+        <el-dropdown trigger="click" style="padding: 0 10px">
           <span class="el-dropdown-link" :title="userInfo.name">
-          <img v-if="!userInfo.avatar" class="user-img" src="@/assets/user.jpg" alt="Macie Avatar" />
-          <img v-if="userInfo.avatar" class="user-img" :src="userInfo.avatar" alt="Macie Avatar" />
-          <i class="el-icon-arrow-down el-icon--right"></i></span>
+            <img v-if="!userInfo.avatar" class="user-img" src="@/assets/user.jpg" alt="Macie Avatar" />
+            <img v-if="userInfo.avatar" class="user-img" :src="userInfo.avatar" alt="Macie Avatar" />
+            <i class="el-icon-arrow-down el-icon--right"></i
+          ></span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item><router-link to="/settings">设 置</router-link></el-dropdown-item>
             <el-dropdown-item @click.native.prevent="handleLogout">登 出</el-dropdown-item>
@@ -24,13 +23,13 @@
         </el-dropdown>
       </template>
       <div v-else>
-          <!-- <router-link to="/login"> -->
-            <el-button size="small" @click.native.prevent="openDialog" type="primary">登录</el-button>
-              <login/>
-          <!-- </router-link> -->
-          <!-- <router-link to="/register"> -->
-            <el-button size="small" type="danger">注册</el-button>
-          <!-- </router-link> -->
+        <!-- <router-link to="/login"> -->
+        <el-button size="small" @click.native.prevent="openDialog" type="primary">登录</el-button>
+        <login />
+        <!-- </router-link> -->
+        <!-- <router-link to="/register"> -->
+        <el-button size="small" type="danger">注册</el-button>
+        <!-- </router-link> -->
       </div>
     </div>
   </div>
@@ -59,11 +58,6 @@ export default {
     }
   },
   computed: {
-    // activeNav: function () {
-    //   return this.navList.filter((item) => {
-    //     return !item.requireLogin || this.$store.state.user.token
-    //   })
-    // },
     userInfo: function () {
       let login = false
       if (this.$store.state.user.token) {
@@ -93,7 +87,7 @@ export default {
       that.$store.dispatch('app/toggleLoginDialog')
     },
     editArticle() {
-      if(!this.$store.state.user.token) {
+      if (!this.$store.state.user.token) {
         this.$store.dispatch('app/toggleLoginDialog').then(() => {
         })
       }
@@ -101,10 +95,7 @@ export default {
         this.$router.push('/editArticle')
       }
     }
-
-
   },
-
 }
 
 </script>
@@ -149,12 +140,12 @@ export default {
 }
 
 .user-img {
-    width: 40px;
-    height: 40px;
-    // border: 1px solid #ddd;
-    border-radius: 50%;
-    vertical-align: middle;
-    cursor: pointer;
+  width: 40px;
+  height: 40px;
+  // border: 1px solid #ddd;
+  border-radius: 50%;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .el-menu-item {

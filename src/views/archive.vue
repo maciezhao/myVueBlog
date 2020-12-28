@@ -8,15 +8,17 @@
             <el-link :underline="false" style="font-size: 20px; padding: 10px" @click="viewArticleDetail(article.articleId, article.articleSlug)">{{
               article.articleTitle
             }}</el-link>
+
             <more-actions :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
-            <br />
-            <other-blog-info
-              style="padding: 10px"
-              :articleCreateTime="article.articleCreateTime.time"
-              :categoryName="article.categoryName"
-              :tags="articleIdTagsMap[article.articleId]"
-            >
-            </other-blog-info>
+            <div>
+              <other-blog-info
+                style="padding: 10px"
+                :articleCreateTime="article.articleCreateTime.time"
+                :categoryName="article.categoryName"
+                :tags="articleIdTagsMap[article.articleId]"
+              >
+              </other-blog-info>
+            </div>
           </el-card>
         </el-timeline-item>
       </template>
@@ -129,9 +131,6 @@ export default {
 </script>
 
 <style scoped>
-/* // .el-timeline-item {
-//   padding-bottom: 5px;
-// } */
 .my-el-pagination {
   text-align: center;
   margin: 10px;

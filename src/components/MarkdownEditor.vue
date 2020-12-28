@@ -6,6 +6,7 @@
     v-model="editor.value"
     @imgAdd="imgAdd"
     @imgDel="imgDel"
+    @fullScreen="fullScreen"
     v-bind="editor"
   >
   </mavon-editor>
@@ -25,24 +26,33 @@ export default {
   },
   data() {
     return {
-
+      zindex: 6,
     }
   },
-  computed: {
-    zindex() {
-      let sidebarOpen = this.$store.state.app.sidebar.opened
-      let device = this.$store.state.app.device
-      let zindex = 1500
-      if (device === 'mobile' && sidebarOpen === true) {
-        zindex = 6
-      }
-      return zindex
-    }
-  },
+  // computed: {
+  //   zindex() {
+  //     // 修改全屏编辑z-index
+  //     let sidebarOpen = this.$store.state.app.sidebar.opened
+  //     let device = this.$store.state.app.device
+  //     let zindex = 6
+  //     if (device === 'mobile' && sidebarOpen === true) {
+  //       zindex = 6
+  //     }
+  //     return zindex
+  //   }
+  // },
   mounted() {
     this.$set(this.editor, 'ref', this.$refs.md)
   },
   methods: {
+    fullScreen(status, value) {
+      if (status === true) {
+        this.zindex = 1500
+      }
+      else {
+        this.zindex = 10
+      }
+    },
     imgAdd(pos, $file) {
       let that = this
       let formData = new formData();
@@ -56,7 +66,7 @@ export default {
       })
     },
     imgDel(pos) {
-      console.log("imgDel:",pos[0])
+      console.log("imgDel:", pos[0])
       // deleteImg(pos[0])
 
 
@@ -72,6 +82,20 @@ export default {
   min-height: 500px;
   border: none !important;
   box-shadow: none !important;
-  // background-color: #fff!important;
+  .v-show-content {
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    // padding: 8px 25px 15px 25px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+}
+</style>
+
+<style>
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content {
+  padding: 6px !important;
 }
 </style>

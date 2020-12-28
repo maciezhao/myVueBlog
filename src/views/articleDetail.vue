@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="min-height: 500px">
-      <el-card v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" v-if="article">
+      <el-card :style="{'margin' : device === 'mobile' ? '0px' : '0 100px' }" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" v-if="article">
         <div class="item">
           <span style="font-weight: 700; font-size: 24px">{{ article.articleTitle }}</span>
           <more-action :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
@@ -55,51 +55,54 @@ export default {
     }
   },
   inject: ['reload'],
-  created() {
-    this.getArticleDetail()
-  },
-  methods: {
-    getArticleDetail() {
-      let that = this
-      that.loading = true
-      let id = that.$route.params.articleId
-      getArticleDetailById(id).then(response => {
-        //  let art = {"articles":[{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":25,"day":5,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1600963200000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":1,"articleSlug":"first-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第一篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":2,"articleSlug":"second-blog","articleSummary":"博客demo","articleTag":"博客","articleTitle":"第二篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":3,"articleSlug":"third-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第三篇博客","articleViewCount":0,"categoryId":0}],"code":20000}
-        that.article = response.article
-        console.log(that.article.articleCreateTime.time)
-        let editor = {
-          value: response.article.articleContentMd,
-          toolbarsFlag: false,
-          subfield: false,
-          previewBackground: '#fff',
-          defaultOpen: 'preview',
-        }
-        this.article['editor'] = editor
-        that.prevArticle = response.prevArticle
-        that.nextArticle = response.nextArticle
-        that.tags = response.tags
-        that.loading = false
-      })
+  computed: {
+    device() {
+      return this.$store.state.app.device
     },
-    viewArticleDetail(article) {
-      this.$router.push({ name: 'articleDetail', params: { articleId: article.articleId, slug: article.articleSlug } })
-      this.reload()
-    }
   },
-  components: {
-    'more-action': moreAction,
-    'other-blog-info': otherBlogInfo,
-    MarkdownEditor,
-  },
-}
+    created() {
+      this.getArticleDetail()
+    },
+    methods: {
+      getArticleDetail() {
+        let that = this
+        that.loading = true
+        let id = that.$route.params.articleId
+        getArticleDetailById(id).then(response => {
+          //  let art = {"articles":[{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":25,"day":5,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1600963200000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":1,"articleSlug":"first-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第一篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":2,"articleSlug":"second-blog","articleSummary":"博客demo","articleTag":"博客","articleTitle":"第二篇博客","articleViewCount":0,"categoryId":0},{"articleAuthor":"","articleCategoryId":0,"articleCommentsCount":0,"articleContentHtml":"这是测试博客的第一篇文章","articleContentMd":"","articleCreateTime":{"date":26,"day":6,"hours":0,"minutes":0,"month":8,"seconds":0,"time":1601049600000,"timezoneOffset":-480,"year":120},"articleDelete":0,"articleId":3,"articleSlug":"third-blog","articleSummary":"博客demo","articleTag":"博客 测试","articleTitle":"第三篇博客","articleViewCount":0,"categoryId":0}],"code":20000}
+          that.article = response.article
+          console.log(that.article.articleCreateTime.time)
+          let editor = {
+            value: response.article.articleContentMd,
+            toolbarsFlag: false,
+            subfield: false,
+            previewBackground: '#fff',
+            defaultOpen: 'preview',
+          }
+          this.article['editor'] = editor
+          that.prevArticle = response.prevArticle
+          that.nextArticle = response.nextArticle
+          that.tags = response.tags
+          that.loading = false
+        })
+      },
+      viewArticleDetail(article) {
+        this.$router.push({ name: 'articleDetail', params: { articleId: article.articleId, slug: article.articleSlug } })
+        this.reload()
+      }
+    },
+    components: {
+      'more-action': moreAction,
+      'other-blog-info': otherBlogInfo,
+      MarkdownEditor,
+    },
+  }
 
 </script>
 
 <style scoped lang="scss">
 .text-body {
   font-size: 14px;
-  margin: 0 20px;
-  // min-height: 300px;
 }
 
 .item {
@@ -111,6 +114,12 @@ export default {
   box-shadow: none;
   border: none;
 }
+// .el-card__body {
+//   padding: 5px;
+// }
+.el-card ::v-deep .el-card__body {
+  padding: 5px !important;
+}
 
 .articleActivitiesClass {
   padding-right: 0 !important;
@@ -119,7 +128,7 @@ export default {
   line-height: 20px;
   margin-right: 15px;
   margin-top: 15px;
-  color: #565a5f;
+  color: #999;
 }
 
 .post-nav {

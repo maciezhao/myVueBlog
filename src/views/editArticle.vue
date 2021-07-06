@@ -42,7 +42,7 @@
               <el-tag :key="tag" v-for="tag in articleForm.dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">{{ tag }}</el-tag>
             </el-form-item>
             <div style="text-align: center">
-              <el-button type="primary" @click.native.prevent="publish">确定并发布</el-button>
+              <el-button type="primary" :loading="loading" @click.native.prevent="publish">确定并发布</el-button>
             </div>
             <el-button slot="reference" type="primary">发布<i class="el-icon-arrow-down el-icon--right" /></el-button>
           </el-popover>
@@ -82,9 +82,13 @@ export default {
       if (value.length == 0 || value.length > 3) {
         callback(new Error("请选择1-3个标签"));
       }
-      else {
-        callback();
+      for(var i in value) {
+        if(value[i].length > 6) {
+          callback("标签长度小于6个字符");
+        }
       }
+      
+      callback();
     }
     return {
       articleForm: {
@@ -133,6 +137,7 @@ export default {
           }
         }
       },
+      loading: false,
       allCategories: [],
       allTags: [],
       publishType: 'create',
@@ -154,6 +159,7 @@ export default {
         ],
         categoryName: [
           { required: true, message: '请选择文章分类', trigger: 'change' },
+          { max: 10, message: '不能大于 10 个字符', trigger: 'change' }
         ],
         dynamicTags: [
           { required: true, type: 'array', validator: validateTags, trigger: 'change' }
@@ -218,6 +224,7 @@ export default {
     publish() {
       this.$refs.articleForm.validate(valid => {
         if (valid) {
+          this.loading = true
           let article = {
             articleTitle: this.articleForm.articleTitle,
             articleSlug: this.articleForm.articleSlug,
@@ -234,11 +241,13 @@ export default {
             console.log(JSON.stringify(article))
           }
           publishArticle(article, this.publishType).then(response => {
+            this.loading = false
             this.$message.success({ message: '文章发布成功', showClose: true })
 
             this.$router.push({ name: 'articleDetail', params: { articleId: response.article.articleId, slug: response.article.articleSlug } })
             this.reload()
           }).catch((error) => {
+            this.loading = false
             console.log(error)
           })
         } else {

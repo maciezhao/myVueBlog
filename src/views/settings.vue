@@ -36,7 +36,7 @@
           <el-input v-model="profileForm.userPhone"></el-input>
         </el-form-item>
         <div style="text-align: center">
-          <el-button type="primary" @click="submitProfileForm">更 新</el-button>
+          <el-button :loading="profileLoading" type="primary" @click="submitProfileForm">更 新</el-button>
         </div>
       </el-form>
     </template>
@@ -56,7 +56,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="accountDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="submitAccountForm">提 交</el-button>
+          <el-button :loading="accountLoading" type="primary" @click="submitAccountForm">提 交</el-button>
         </span>
       </el-dialog>
     </template>
@@ -85,6 +85,8 @@ export default {
       imageUrl: '',
       avatarDialogVisible: false,
       accountDialogVisible: false,
+      accountLoading:false,
+      profileLoading:false,
       profileForm: {
         userName: '',
         userNickName: '',
@@ -101,6 +103,14 @@ export default {
           { required: true, message: '用户名不能为空', trigger: 'blur' },
           { min: 3, max: 20, message: '长度为3-20个字符', trigger: 'blur' }
         ],
+        userPhone: [
+          { required: true, message: '手机号不能为空', trigger: 'blur' },
+          {pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确'}
+        ],
+        userEmail: [
+          { required: true, message: '邮箱不能为空', trigger: 'blur' },
+          {pattern: /^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message: '邮箱格式不正确'}
+        ]
       },
       accountRules: {
         oldPassWd: [
@@ -112,7 +122,6 @@ export default {
         ],
         sameNewPassWd: [
           { required: true, validator:validatesameNewPassWd, trigger: 'blur' },
-          { min: 3, max: 20, message: '长度为3-20个字符', trigger: 'blur' }
         ],
       },
     }
@@ -122,6 +131,7 @@ export default {
   },
   methods: {
     submitProfileForm() {
+      this.profileLoading = true
       let type = "profile"
       const data = new FormData()
       for (var key in this.profileForm) {
@@ -131,16 +141,19 @@ export default {
       data.append('userAvatar', this.userAvatar)
       data.append('oldUserName', this.$store.state.user.name)
       this.$store.dispatch('user/modifyUserInfo', data).then(response => {
+        this.profileLoading = false
         this.$store.state.user.name = response.userName
         this.$message.success({ message: '更新成功', showClose: true })
         location.reload()
       }).catch (error => {
+        this.profileLoading = false
         console.log(error)
       })
     },
     submitAccountForm() {
       this.$refs.accountForm.validate(valid => {
         if(valid) {
+          this.accountLoading = true
           let type = "account"
           let data = new FormData()
           data.append('oldPassWd', md5(this.accountForm.oldPassWd))
@@ -148,10 +161,12 @@ export default {
           data.append('userName', this.$store.state.user.name)
           data.append('type', type)
           this.$store.dispatch('user/modifyUserInfo', data).then(response => {
+            this.accountLoading = false
             this.accountDialogVisible = false
             this.$message.success({ message: '更新成功', showClose: true })
             location.reload()
           }).catch (error => {
+            this.accountLoading = false
             console.log(error)
           })
         }

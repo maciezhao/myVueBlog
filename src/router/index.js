@@ -34,9 +34,12 @@ export const constantRoutes = [
     path:'/editArticle/:articleId?',
     name: 'editArticle',
     component: () => import('@/views/editArticle'),
+    meta:{
+      requireAuth:true
+    },
   },
   {
-    path: '/:type/:id',
+    path: '/:type/:name',
     name:'CategoryOrTag',
     component: () => import('@/views/categoryOrtagdetail'),
 

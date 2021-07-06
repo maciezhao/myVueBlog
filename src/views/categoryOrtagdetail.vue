@@ -1,10 +1,10 @@
 <template>
   <div v-loading="listLoading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
     <template v-if="this.$route.params.type === 'category'">
-      <h1 class="post-header"><i class="icon-class iconfont icon-folder-open" /> {{ this.$route.params.id }}</h1>
+      <h1 class="post-header"><i class="icon-class iconfont icon-folder-open" /> {{ this.$route.params.name }}</h1>
     </template>
     <template v-else-if="this.$route.params.type === 'tag'">
-      <h1 class="post-header"><i class="icon-class iconfont icon-tag" /> {{ this.$route.params.id }}</h1>
+      <h1 class="post-header"><i class="icon-class iconfont icon-tag" /> {{ this.$route.params.name }}</h1>
     </template>
     <el-timeline>
       <el-timeline-item color="#00a1d6" v-for="article in articles" :key="article.articleId">
@@ -74,7 +74,7 @@ export default {
       that.listLoading = true
       let queryData = {
         queryType: that.$route.params.type,
-        [that.$route.params.type]: that.$route.params.id,
+        queryName: that.$route.params.name,
         queryPage: pageNumber,
         pageSize: pageSize,
       };

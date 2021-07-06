@@ -4,7 +4,7 @@
       <span style="font-weight:800">分类</span>
     </div>
     <div v-for="category in categories" :key="category.categoryId">
-    <router-link :to="{name:'CategoryOrTag',params:{type:'category', id:category.categoryName}}" >
+    <router-link :to="{name:'CategoryOrTag',params:{type:'category', name:category.categoryName}}" >
           <i class="iconfont icon-folder"/><el-link :underline="false" style="font-size: 16px" class="each-category">{{category.categoryName+" ["+articlesCount[category.categoryName]+"] "}}</el-link>
     </router-link>
     </div>

@@ -43,7 +43,7 @@ export default {
       })
     },
     showTagDetail(tagName) {
-      this.$router.push({ name: 'CategoryOrTag', params: { type: 'tag', id: tagName } })
+      this.$router.push({ name: 'CategoryOrTag', params: { type: 'tag', name: tagName } })
     },
   }
 }

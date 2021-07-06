@@ -23,10 +23,10 @@ export default {
   },
   methods: {
     showTagDetail(tagName) {
-      this.$router.push({ name: 'CategoryOrTag', params: { type: 'tag', id: tagName } })
+      this.$router.push({ name: 'CategoryOrTag', params: { type: 'tag', name: tagName } })
     },
     showCategoryDetail(categoryName) {
-      this.$router.push({ name: 'CategoryOrTag', params: { type: 'category', id: categoryName } })
+      this.$router.push({ name: 'CategoryOrTag', params: { type: 'category', name: categoryName } })
     },
   }
 }

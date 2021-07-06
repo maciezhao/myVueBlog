@@ -9,7 +9,7 @@
           <more-actions :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
         </div>
         <div class="item">
-          <other-blog-info :articleCreateTime="article.articleCreateTime.time" :categoryName="article.categoryName" :tags="articleIdTagsMap[article.articleId]">
+          <other-blog-info :articleCreateTime="article.articleCreateTime" :categoryName="article.categoryName" :tags="articleIdTagsMap[article.articleId]">
           </other-blog-info>
         </div>
         <div class="text item">

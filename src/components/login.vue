@@ -31,7 +31,7 @@
           </span>
         </el-form-item>
         <el-button :loading="loading" type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleLogin">登录</el-button>
-      <span style="margin-right:20px;">试用账号：test</span><span>密码：123456</span>
+        <span style="margin-right: 20px">试用账号：test</span><span>密码：123456</span>
       </el-form>
     </div>
   </el-dialog>
@@ -80,7 +80,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$store.dispatch('app/toggleLoginDialog').then(() => {
             })
@@ -139,7 +138,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-
 .login-container {
   min-height: 100%;
   width: 100%;

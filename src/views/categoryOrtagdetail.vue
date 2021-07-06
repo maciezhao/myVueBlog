@@ -16,7 +16,7 @@
           <div>
             <other-blog-info
               style="padding: 10px"
-              :articleCreateTime="article.articleCreateTime.time"
+              :articleCreateTime="article.articleCreateTime"
               :categoryName="article.categoryName"
               :tags="articleIdTagsMap[article.articleId]"
             >

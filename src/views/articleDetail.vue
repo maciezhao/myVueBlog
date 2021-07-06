@@ -7,7 +7,7 @@
           <more-action :articleId="article.articleId" :articleAuthor="article.articleAuthor" style="float: right" />
         </div>
         <div class="item">
-          <other-blog-info :articleCreateTime="article.articleCreateTime.time" :categoryName="article.categoryName" :tags="tags"> </other-blog-info>
+          <other-blog-info :articleCreateTime="article.articleCreateTime" :categoryName="article.categoryName" :tags="tags"> </other-blog-info>
         </div>
         <!-- <div class="text item">
           {{ article.articleSummary }}

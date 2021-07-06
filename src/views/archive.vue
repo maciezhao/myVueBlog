@@ -13,7 +13,7 @@
             <div>
               <other-blog-info
                 style="padding: 10px"
-                :articleCreateTime="article.articleCreateTime.time"
+                :articleCreateTime="article.articleCreateTime"
                 :categoryName="article.categoryName"
                 :tags="articleIdTagsMap[article.articleId]"
               >
@@ -93,7 +93,7 @@ export default {
       let years = []
       let articlesInOneYear = []
       for (var index in articles) {
-        let time = articles[index].articleCreateTime.time
+        let time = articles[index].articleCreateTime
         let year = new Date(time).getFullYear()
         if (years.indexOf(year) === -1) {
           years.push(year)
@@ -104,7 +104,7 @@ export default {
       this.years = years
       for (var y in years) {
         for (var i in articles) {
-          let time = articles[i].articleCreateTime.time
+          let time = articles[i].articleCreateTime
           let year = new Date(time).getFullYear()
           if (year == years[y]) {
             articlesInOneYear.push(articles[i])

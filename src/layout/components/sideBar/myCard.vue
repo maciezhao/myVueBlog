@@ -47,9 +47,9 @@ export default {
   data() {
     return {
       AllCount: {
-        articlesTotalCount: Number,
-        tagsTotalCount: Number,
-        categoriesTotalCount: Number,
+        articlesTotalCount: '',
+        tagsTotalCount: '',
+        categoriesTotalCount: '',
       },
       cardInfo: {
         userName: 'Macie',

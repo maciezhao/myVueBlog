@@ -36,12 +36,14 @@ export function getAllTags() {
 export function publishArticle(formData, type) {
   formData['articleCreateTime'] = (new Date()).valueOf();
   formData['articleSlug'] = formData['articleSlug'].replace(/\s+/g, "-")
+  let dynamicTags = formData['dynamicTags']
+  delete formData['dynamicTags']
   return request({
     url: '/publishArticle',
     method: 'post',
     data:qs.stringify({
         article:JSON.stringify(formData),
-        dynamicTags:JSON.stringify(formData['dynamicTags']),
+        dynamicTags:JSON.stringify(dynamicTags),
         publishType:type
        }),
   })

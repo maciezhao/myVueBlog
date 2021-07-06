@@ -77,7 +77,7 @@ export default {
         this.$store.dispatch('user/logout', this.loginForm).then(() => {
 
         }).catch((error) => {
-          this.message.error({ message: error, type: 'error', showClose: true })
+          this.$message.error({ message: '退出登录失败', type: 'error', showClose: true })
         })
       })
 

@@ -46,6 +46,15 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+
+    // 消除javaEE和SSM返回数据的差异
+    if(res.data != null) {
+      let data = res.data
+      for(var key in data) {
+        res[key] = data[key]
+      }
+      delete res['data']
+    }
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       console.log(res)

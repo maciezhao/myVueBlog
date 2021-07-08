@@ -73,7 +73,7 @@ export default {
           that.article = response.article
           console.log(that.article.articleCreateTime.time)
           let editor = {
-            value: response.article.articleContentMd,
+            value: "**" + response.article.articleSummary + "**<br><br>" + response.article.articleContentMd,
             toolbarsFlag: false,
             subfield: false,
             previewBackground: '#fff',

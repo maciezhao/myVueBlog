@@ -14,8 +14,9 @@
             class="avatar-uploader"
             action=""
             :headers="myHeaders"
+            :auto-upload="false"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
+            :on-change="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
@@ -80,7 +81,7 @@ export default {
         'Access-Control-Allow-Origin': '*',
         // "Expect":"100-continue",
       },
-      userAvatarPath: '',
+      userAvatar: '',
       activeName: 'profile',
       imageUrl: '',
       avatarDialogVisible: false,
@@ -131,23 +132,28 @@ export default {
   },
   methods: {
     submitProfileForm() {
-      this.profileLoading = true
-      let type = "profile"
-      const data = new FormData()
-      for (var key in this.profileForm) {
-        data.append(key, this.profileForm[key])
-      }
-      data.append('type', type)
-      data.append('userAvatar', this.userAvatar)
-      data.append('oldUserName', this.$store.state.user.name)
-      this.$store.dispatch('user/modifyUserInfo', data).then(response => {
-        this.profileLoading = false
-        this.$store.state.user.name = response.userName
-        this.$message.success({ message: '更新成功', showClose: true })
-        location.reload()
-      }).catch (error => {
-        this.profileLoading = false
-        console.log(error)
+      this.$refs.profileForm.validate(valid => {
+        if(valid) {
+          this.profileLoading = true
+          let type = "profile"
+          const data = new FormData()
+          for (var key in this.profileForm) {
+            data.append(key, this.profileForm[key])
+          }
+          data.append('type', type)
+          data.append('userAvatar', this.userAvatar)
+          // data.append(this.userAvatar.get("avatar"))
+          data.append('oldUserName', this.$store.state.user.name)
+          this.$store.dispatch('user/modifyUserInfo', data).then(response => {
+            this.profileLoading = false
+            this.$store.state.user.name = response.userName
+            this.$message.success({ message: '更新成功', showClose: true })
+            location.reload()
+          }).catch (error => {
+            this.profileLoading = false
+            console.log(error)
+          })
+        }
       })
     },
     submitAccountForm() {
@@ -172,10 +178,12 @@ export default {
         }
       })
     },
-    handleAvatarSuccess(res, file) {
+    handleAvatarSuccess(file, fileList) {
       this.imageUrl = URL.createObjectURL(file.raw);
       console.log("imgurl:", this.imageUrl)
       this.userAvatar = file.raw
+      // this.userAvatar = new FormData().append("avatar", file.raw);
+
     },
 
     beforeAvatarUpload(file) {

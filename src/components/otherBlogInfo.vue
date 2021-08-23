@@ -17,7 +17,7 @@
 <script>
 export default {
   props: {
-    articleCreateTime: Number,
+    articleCreateTime: String,
     categoryName: String,
     tags: Array,
   },

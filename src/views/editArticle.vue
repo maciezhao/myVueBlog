@@ -238,7 +238,6 @@ export default {
           if (this.$route.params.articleId) {
             article["articleId"] = this.$route.params.articleId;
             this.publishType = 'modify'
-            console.log(JSON.stringify(article))
           }
           publishArticle(article, this.publishType).then(response => {
             this.loading = false

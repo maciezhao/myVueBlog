@@ -55,12 +55,11 @@ export default {
     },
     imgAdd(pos, $file) {
       let that = this
-      let formData = new formData();
+      let formData = new FormData();
       formData.append('image', $file);
       uploadImg(formData).then(response => {
         // 将返回的url替换到文本原位置![...](./0) -> ![...](url)
-        console.log(pos)
-        that.$refs.md.$img2Url(pos, response.imageUrl);
+        that.$refs.md.$img2Url(pos, response.imageUrl.replace(/\\/g,"/"));
       }).catch(error => {
         that.$message.error({ message: error, showClose: true });
       })
